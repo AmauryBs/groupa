@@ -1,11 +1,13 @@
 package polytech.cloud.groupa.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import polytech.cloud.groupa.Model.Utilisateur;
 import polytech.cloud.groupa.Service.UtilisateurService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,36 @@ public class UtilisateurController {
         List<Utilisateur> users = service.getAllUsers();
         return users;
     }
+
+    @GetMapping("/user")
+    public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam int page){
+        List<Utilisateur> users = service.getAllUsers();
+        List<Utilisateur> usersPage = new ArrayList<>();
+        if(users.size()>=99+100*page){
+            usersPage = users.subList(0+100*page,99+100*page);
+        }else {
+            usersPage = users.subList(0 + 100 * page, users.size() - 1);
+        }
+        return usersPage;
+    }
+
+    @GetMapping("/user/age")
+    public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam int gt){
+        List<Utilisateur> users = service.getUsersWithAgeSup(gt);
+    }
+
+    @GetMapping("/user/age")
+    public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam int eq){
+        List<Utilisateur> users = service.getUsersWithAgeEq(eq);
+    }
+
+    @GetMapping("/user/search")
+    public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam String term){
+        List<Utilisateur> users = service.getAllUsersByName(term);
+        return users;
+    }
+
+    @GetMapping("/user/nearest/{lat}&{lon}")
 
     @GetMapping("/user/{id}")
     public Utilisateur getById(@PathVariable("id") int id){

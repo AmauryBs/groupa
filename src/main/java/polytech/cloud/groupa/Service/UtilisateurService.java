@@ -41,6 +41,33 @@ public class UtilisateurService {
         this.repository.saveAll(users);
     }
 
+    public List<Utilisateur> getUsersWithAgeSup(int age){
+        List<Utilisateur> users = repository.findWithAgeSup(age);
+        if(users.size()>100){
+            return users.subList(0,99);
+        }else{
+            return users;
+        }
+    }
+
+    public List<Utilisateur> getUsersWithAgeEq(int age){
+        List<Utilisateur> users = repository.findWithAgeEq(age);
+        if(users.size()>100){
+            return users.subList(0,99);
+        }else{
+            return users;
+        }
+    }
+
+    public List<Utilisateur> getAllUsersByName(String name){
+        List<Utilisateur> users = repository.findWithName(name);
+        if(users.size()>100){
+            return users.subList(0,99);
+        }else{
+            return users;
+        }
+    }
+
     public void updateUser(Utilisateur user, int id){
         Optional<Utilisateur> UserToUpdate = this.repository.findById(id);
         if(UserToUpdate.isPresent()){
