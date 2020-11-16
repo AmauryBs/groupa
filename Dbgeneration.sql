@@ -4,5 +4,6 @@ CREATE TABLE Users (
  firstName VARCHAR(255),
  lastName VARCHAR(255),
  birthDay DATE,
- position VARCHAR(255), 
+ latitude FLOAT,
+ longitude FLOAT, 
  PRIMARY KEY (ActorId));
