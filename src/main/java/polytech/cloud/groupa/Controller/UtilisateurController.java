@@ -32,34 +32,31 @@ public class UtilisateurController {
     }
 
     @PutMapping("/user")
-    public void ModifyAllUser(){
-
+    public ResponseEntity modifyAllUser(@RequestBody List<Utilisateur> users){
+        this.service.modifyAllUser(users);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/user")
-    public void AddUsers(){
-
-    }
-
-    @PostMapping("/user")
-    public ResponseEntity AddUser(@RequestBody Utilisateur user){
+    public ResponseEntity addUser(@RequestBody Utilisateur user){
         this.service.addUser(user);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/user")
-    public void DeleteAllUser(){
-
+    public ResponseEntity deleteAllUser(){
+        this.service.deleteAllUser();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity DeleteUser(@PathVariable("id") int id){
+    public ResponseEntity deleteUser(@PathVariable("id") int id){
         this.service.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity ModifyUser(@PathVariable("id") int id, @RequestBody Utilisateur user){
+    public ResponseEntity modifyUser(@PathVariable("id") int id, @RequestBody Utilisateur user){
         this.service.updateUser(user,id);
         return ResponseEntity.noContent().build();
     }

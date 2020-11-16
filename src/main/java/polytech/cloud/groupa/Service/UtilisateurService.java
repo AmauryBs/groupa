@@ -28,6 +28,19 @@ public class UtilisateurService {
         this.repository.save(user);
     }
 
+    public void deleteUser(int id) {
+        this.repository.deleteById(id);
+    }
+
+    public void deleteAllUser(){
+        this.repository.deleteAll();
+    }
+
+    public void modifyAllUser(List<Utilisateur> users){
+        this.repository.deleteAll();
+        this.repository.saveAll(users);
+    }
+
     public void updateUser(Utilisateur user, int id){
         Optional<Utilisateur> UserToUpdate = this.repository.findById(id);
         if(UserToUpdate.isPresent()){
