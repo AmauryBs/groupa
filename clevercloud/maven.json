@@ -1,7 +1,7 @@
 {
   "build": {
     "type": "maven",
-    "goal": "jar:jar"
+    "goal": "verify"
   },
   "deploy": {
     "jarName": "target/groupa-0.0.1-SNAPSHOT.jar"
