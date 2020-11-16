@@ -68,6 +68,15 @@ public class UtilisateurService {
         }
     }
 
+    public List<Utilisateur> getNearestUser(int lat, int lon){
+        List<Utilisateur> users = repository.findByLatAndLon(lat,lon);
+        if(users.size()>10){
+            return users.subList(0,9);
+        }else{
+            return users;
+        }
+    }
+
     public void updateUser(Utilisateur user, int id){
         Optional<Utilisateur> UserToUpdate = this.repository.findById(id);
         if(UserToUpdate.isPresent()){

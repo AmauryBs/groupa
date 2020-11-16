@@ -18,4 +18,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Intege
 
     @Query("SELECT u FROM User u WHERE u.name = ?1")
     public List<Utilisateur> findWithName(String name);
+
+    @Query("SELECT u FROM User u)
+    public List<Utilisateur> findByLatAndLon(int lat,int lon);
 }

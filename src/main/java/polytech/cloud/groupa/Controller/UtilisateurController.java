@@ -28,7 +28,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("/user")
-    public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam int page){
+    public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam(value = "page") int page){
         List<Utilisateur> users = service.getAllUsers();
         List<Utilisateur> usersPage = new ArrayList<>();
         if(users.size()>=99+100*page){
@@ -40,22 +40,28 @@ public class UtilisateurController {
     }
 
     @GetMapping("/user/age")
-    public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam int gt){
+    public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam(value = "gt") int gt){
         List<Utilisateur> users = service.getUsersWithAgeSup(gt);
+        return users;
     }
 
     @GetMapping("/user/age")
-    public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam int eq){
+    public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam(value = "eq") int eq){
         List<Utilisateur> users = service.getUsersWithAgeEq(eq);
+        return users;
     }
 
     @GetMapping("/user/search")
-    public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam String term){
+    public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam(value = "term") String term){
         List<Utilisateur> users = service.getAllUsersByName(term);
         return users;
     }
 
-    @GetMapping("/user/nearest/{lat}&{lon}")
+    @GetMapping("/user/nearest")
+    public List<Utilisateur> getNearestUsers(@RequestParam(value = "lat") int lat, @RequestParam(value = "lon") int lon){
+        List<Utilisateur> users = service.getNearestUser(lat,lon);
+        return users;
+    }
 
     @GetMapping("/user/{id}")
     public Utilisateur getById(@PathVariable("id") int id){
