@@ -1,9 +1,9 @@
 {
   "build": {
     "type": "maven",
-    "goal": "package"
+    "goal": "jar:jar"
   },
   "deploy": {
-    "jarName": "target/myproject-1.0-jar-with-dependencies.jar"
+    "jarName": "target/groupa-0.0.1-SNAPSHOT.jar"
   }
 }
