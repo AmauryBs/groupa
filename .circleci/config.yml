@@ -17,7 +17,7 @@ jobs:
 
       - run: cd ./cloud-client-eval && npm run step:3
 
-      - run:cd ./cloud-client-eval &&  npm run step:3bis
+      - run: cd ./cloud-client-eval &&  npm run step:3bis
 
       
 workflows:
