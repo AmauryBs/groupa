@@ -17,5 +17,6 @@ jobs:
 workflows:
   node_tests:
     jobs:
-      - install_node_test_project
-      - node_test_1
+      - node_test_1:
+      required :
+        - install_node_test_project
