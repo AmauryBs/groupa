@@ -33,6 +33,3 @@ workflows:
       - node_tests:
           requires:
             - install_node_test_project
-
-      - maven/test:
-          command: '-X verify'
