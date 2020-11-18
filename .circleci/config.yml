@@ -14,10 +14,10 @@ jobs:
     steps:
       - run: npm run step:1
 workflows:
-  version: 2.1
+  version: 2
   node_tests:
     jobs:
-      install_node_test_project
-      node_test_1:
+      - install_node_test_project
+      - node_test_1:
         requires:
           - install_node_test_project
