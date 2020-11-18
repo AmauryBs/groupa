@@ -4,6 +4,7 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
+  version: 2
   install_node_test_project:
     executor: node/default
     steps:
