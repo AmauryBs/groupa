@@ -6,13 +6,12 @@ orbs:
 jobs:
   install_node_test_project:
     docker: 
-      - image: circleci/node:latest
-      - image: circleci/mysql:8.0.4
+      image: circleci/node:latest
+      image: circleci/mysql:8.0.4
       environment:
-        MYSQL_ROOT_PASSWORD: rootpw
-        MYSQL_DATABASE: test_db
-        MYSQL_USER: user
-        MYSQL_PASSWORD: passw0rd
+        MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
+        MYSQL_USER: urxmgpnqgbgcomuu
+        MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
     steps:
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
      # - run: cd ./cloud-client-eval &&
