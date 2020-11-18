@@ -10,7 +10,6 @@ jobs:
       - checkout
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
       - run: npm install
-      - run: npm run step:1
 
   node_tests:
     docker:
