@@ -1,7 +1,17 @@
+version: 2.1
 orbs:
   maven: circleci/maven@1.0.0
-version: 2.1
+  node: circleci/node@2.0.2
+
+jobs:
+  install_node_test_project:
+    executor: node/default
+    steps:
+      - run:
+        command: git clone https://github.com/Slashgear/cloud-client-eval.git
+      - run:
+        command: npm install
 workflows:
-  maven_test:
-    jobs:
-      - maven/test
+  node_test:
+    - install_node_test_project:
+      command: npm run step:1
