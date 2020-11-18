@@ -1,7 +1,7 @@
 {
   "build": {
     "type": "maven",
-    "goal": "verify -DskipTests"
+    "goal": "clean verify -DskipTests"
   },
   "deploy": {
     "jarName": "target/groupa-*.jar"
