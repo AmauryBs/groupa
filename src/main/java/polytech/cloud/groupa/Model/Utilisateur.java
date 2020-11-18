@@ -56,13 +56,13 @@ public class Utilisateur {
     }
 
     @Basic
-    @Column(name = "latitude", nullable = true, length = 100)
+    @Column(name = "lat", nullable = true, length = 100)
     public Long getLat() {
         return lat;
     }
 
     @Basic
-    @Column(name = "longitude", nullable = true, length = 100)
+    @Column(name = "long", nullable = true, length = 100)
     public Long getLon() {
         return lon;
     }
