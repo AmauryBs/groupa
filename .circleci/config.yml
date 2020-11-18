@@ -15,5 +15,6 @@ jobs:
     steps:
       - run: npm run step:1
 workflows:
-  node_test:
+  jobs:
+    node_test:
       - install_node_test_project
