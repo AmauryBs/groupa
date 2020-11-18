@@ -4,7 +4,7 @@ orbs:
 jobs:
   install_node_test_project:
     docker: 
-      image: circleci/node:latest
+      - image: circleci/node:latest
       - image: circleci/mysql:8.0.4
       environment:
         MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
