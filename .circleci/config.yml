@@ -29,7 +29,7 @@ workflows:
   version: 2
   tests:
     jobs:
-      - maven/test
+      #- maven/test
       - install_node_test_project
       - node_tests:
           requires:
