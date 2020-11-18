@@ -4,13 +4,15 @@ orbs:
 
 jobs:
   install_node_test_project:
-    executor: node/default
+    docker:
+      - image: circleci/node:latest
     steps:
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
       - run: npm install
 
   node_test_1:
-    executor: node/default
+    docker:
+      - image: circleci/node:latest
     steps:
       - run: npm run step:1
 workflows:
