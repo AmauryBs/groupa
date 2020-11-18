@@ -10,15 +10,13 @@ jobs:
       - checkout
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
       - run: npm install
-      - run: npm run step:1
-      - run: npm run step:2
-      - run: npm run step:3
-      - run: npm run step:3bis
+      
 
   node_tests:
     executor: node/default
     steps:
       - checkout
+      - run: cd cloud-client-eval
       - run: npm run step:1
       - run: npm run step:2
       - run: npm run step:3
