@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 orbs:
   maven: circleci/maven@1.0.0
   node: circleci/node@4.1.0
@@ -18,7 +18,7 @@ jobs:
           npm run step:3bis
       
 workflows:
-  version: 2.1
+  version: 2
   tests:
     jobs:
       #- maven/test
