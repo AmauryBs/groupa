@@ -8,7 +8,7 @@ jobs:
     executor: node/default
     steps:
       - run:
-        command: |
+        - command: |
           git clone https://github.com/Slashgear/cloud-client-eval.git
           cd ./cloud-client-eval 
           npm install
