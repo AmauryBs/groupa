@@ -8,8 +8,9 @@ jobs:
     executor: node/default
     steps:
       - run:
+        command: |
           git clone https://github.com/Slashgear/cloud-client-eval.git
-          cd ./cloud-client-eval && 
+          cd ./cloud-client-eval 
           npm install
           npm run step:1
           npm run step:2
@@ -17,7 +18,7 @@ jobs:
           npm run step:3bis
       
 workflows:
-  version: 2
+  version: 2.1
   tests:
     jobs:
       #- maven/test
