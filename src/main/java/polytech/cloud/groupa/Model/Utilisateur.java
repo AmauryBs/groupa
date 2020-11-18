@@ -1,10 +1,10 @@
 package polytech.cloud.groupa.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@Table(name = "Users", schema = "Projet_cloud", catalog = "")
 public class Utilisateur {
     private String Id;
     private String FirstName;
@@ -15,18 +15,26 @@ public class Utilisateur {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     public String getId(){
         return this.Id;
     }
 
+    @Basic
+    @Column(name = "birthday", nullable = true)
     public Date getBirthDate() {
         return BirthDate;
     }
 
+    @Basic
+    @Column(name = "firstname", nullable = false, length = 255)
     public String getFirstName() {
         return FirstName;
     }
 
+    @Basic
+    @Column(name = "lastname", nullable = false, length = 255)
     public String getLastName() {
         return LastName;
     }
@@ -47,10 +55,14 @@ public class Utilisateur {
         LastName = lastName;
     }
 
+    @Basic
+    @Column(name = "latitude", nullable = true, length = 100)
     public Long getLat() {
         return lat;
     }
 
+    @Basic
+    @Column(name = "longitude", nullable = true, length = 100)
     public Long getLon() {
         return lon;
     }

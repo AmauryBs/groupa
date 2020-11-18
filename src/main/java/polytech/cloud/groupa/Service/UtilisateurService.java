@@ -30,7 +30,7 @@ public class UtilisateurService {
     }
 
     public void deleteUser(String id) {
-        this.repository.deleteById(id);
+        this.repository.deleteWithId(id);
     }
 
     public void deleteAllUser(){
@@ -64,11 +64,14 @@ public class UtilisateurService {
         Date date = new Date();
         Date dateMax = new Date();
         Calendar cal = Calendar.getInstance();
+        Calendar calMax = Calendar.getInstance();
         cal.add(Calendar.YEAR, -age);
         date = cal.getTime();
-        cal.add(Calendar.YEAR, age);
-        cal.add(Calendar.DATE, -1);
-        dateMax = cal.getTime();
+        System.out.println(date.toString());
+        calMax.add(Calendar.YEAR, -age+1);
+        calMax.add(Calendar.DATE, -1);
+        dateMax = calMax.getTime();
+        System.out.println(dateMax.toString());
         List<Utilisateur> users = repository.findWithAgeEq(date,dateMax,limitUser);
         return users;
     }

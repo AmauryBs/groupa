@@ -14,23 +14,23 @@ import java.util.Optional;
 
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer> {
-    @Query("SELECT u FROM user u WHERE u.birthdate > ?1")
-    public List<Utilisateur> findWithAgeSup(Date date, @PageableDefault(size = 100) Pageable pageable);
+    @Query("SELECT u FROM Users u WHERE u.birthDay<?1")
+    List<Utilisateur> findWithAgeSup(Date date, @PageableDefault(size = 100) Pageable pageable);
 
-    @Query("SELECT u FROM user u WHERE u.birthdate >= ?1 AND u.birthdate <= ?2")
-    public List<Utilisateur> findWithAgeEq(Date date, Date dateMax, Pageable pageable);
+    @Query("SELECT u FROM Users u WHERE u.birthDay >=?1 AND u.birthDay <=?2")
+    List<Utilisateur> findWithAgeEq(Date date, Date dateMax, @PageableDefault(size = 100) Pageable pageable);
 
-    @Query("SELECT u FROM user u WHERE u.firstname = ?1")
-    public List<Utilisateur> findWithName(String name, Pageable pageable);
+    @Query("SELECT u FROM Users u WHERE u.lastName = ?1")
+    List<Utilisateur> findWithName(String name, @PageableDefault(size = 100) Pageable pageable);
 
-    @Query("SELECT u FROM user u")
-    public List<Utilisateur> findNUser(Pageable pageable);
+    @Query("SELECT u FROM Users u")
+    List<Utilisateur> findNUser(@PageableDefault(size = 100) Pageable pageable);
 
-    @Query("SELECT u FROM user u WHERE u.id = ?1")
-    public Optional<Utilisateur> findById(String id);
+    @Query("SELECT u FROM Users u WHERE u.id = ?1")
+    Optional<Utilisateur> findById(String id);
 
-    @Query("DELETE u FROM user u WHERE u.id = ?1")
-    public void deleteById(String id);
+    @Query("DELETE FROM Users u WHERE u.id = ?1")
+    void deleteWithId(String id);
 
     //@Query("SELECT u1 FROM User u1, User u, WHERE u1.latitude - ?1 <")
     //public List<Utilisateur> findByLatAndLon(int lat,int lon, Pageable pageable);

@@ -20,32 +20,32 @@ public class UtilisateurController {
         this.service = services;
     }
 
-    @GetMapping("/user")
-    public List<Utilisateur> getAll(){
-        List<Utilisateur> users = service.getAllUsers();
-        return users;
-    }
+    //@GetMapping("/user")
+    //public List<Utilisateur> getAll(){
+    //    List<Utilisateur> users = service.getAllUsers();
+    //    return users;
+    //}
 
     @GetMapping("/user")
-    public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam(value = "page") int page){
+    public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam(name = "page") int page){
         List<Utilisateur> users = service.getNUser(page);
         return users;
     }
 
-    @GetMapping("/user/age")
-    public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam(value = "gt") int gt){
+    @GetMapping(value = "/user/age" , params = "gt")
+    public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam(name = "gt") int gt){
         List<Utilisateur> users = service.getUsersWithAgeSup(gt,100);
         return users;
     }
 
-    @GetMapping("/user/age")
-    public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam(value = "eq") int eq){
+    @GetMapping(value = "/user/age", params = "eq")
+    public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam(name = "eq") int eq){
         List<Utilisateur> users = service.getUsersWithAgeEq(eq,100);
         return users;
     }
 
     @GetMapping("/user/search")
-    public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam(value = "term") String term){
+    public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam(name = "term") String term){
         List<Utilisateur> users = service.getAllUsersByName(term,100);
         return users;
     }
