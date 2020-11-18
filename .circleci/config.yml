@@ -7,12 +7,15 @@ jobs:
   install_node_test_project:
     executor: node/default
     steps:
-      - run: git clone https://github.com/Slashgear/cloud-client-eval.git && cd ./cloud-client-eval && npm install
-      - run: cd ./cloud-client-eval && npm run step:1
-      - run: cd ./cloud-client-eval && npm run step:1
-      - run: cd ./cloud-client-eval && npm run step:2
-      - run: cd ./cloud-client-eval && npm run step:3
-      - run: cd ./cloud-client-eval && npm run step:3bis
+      - run: 
+        command: |
+          git clone https://github.com/Slashgear/cloud-client-eval.git
+          cd ./cloud-client-eval && 
+          npm install
+          npm run step:1
+          npm run step:2
+          npm run step:3
+          npm run step:3bis
       
 workflows:
   version: 2
