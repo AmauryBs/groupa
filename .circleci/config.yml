@@ -1,7 +1,8 @@
 version: 2.1
 orbs:
   maven: circleci/maven@1.0.0
-
+  
+version: 2
 jobs:
   install_node_test_project:
     docker: 
