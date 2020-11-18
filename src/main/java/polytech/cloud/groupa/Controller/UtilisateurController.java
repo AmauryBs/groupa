@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/User")
 public class UtilisateurController {
     private UtilisateurService service;
 
@@ -29,42 +28,36 @@ public class UtilisateurController {
 
     @GetMapping("/user")
     public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam(value = "page") int page){
-        List<Utilisateur> users = service.getAllUsers();
-        List<Utilisateur> usersPage = new ArrayList<>();
-        if(users.size()>=99+100*page){
-            usersPage = users.subList(0+100*page,99+100*page);
-        }else {
-            usersPage = users.subList(0 + 100 * page, users.size() - 1);
-        }
-        return usersPage;
+        List<Utilisateur> users = service.getNUser(page);
+        return users;
     }
 
     @GetMapping("/user/age")
     public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam(value = "gt") int gt){
-        List<Utilisateur> users = service.getUsersWithAgeSup(gt);
+        List<Utilisateur> users = service.getUsersWithAgeSup(gt,100);
         return users;
     }
 
     @GetMapping("/user/age")
     public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam(value = "eq") int eq){
-        List<Utilisateur> users = service.getUsersWithAgeEq(eq);
+        List<Utilisateur> users = service.getUsersWithAgeEq(eq,100);
         return users;
     }
 
     @GetMapping("/user/search")
     public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam(value = "term") String term){
-        List<Utilisateur> users = service.getAllUsersByName(term);
+        List<Utilisateur> users = service.getAllUsersByName(term,100);
         return users;
     }
 
     @GetMapping("/user/nearest")
-    public List<Utilisateur> getNearestUsers(@RequestParam(value = "lat") int lat, @RequestParam(value = "lon") int lon){
+    public List<Utilisateur> getNearestUsers(@RequestParam(value = "lat") float lat, @RequestParam(value = "lon") float lon){
         List<Utilisateur> users = service.getNearestUser(lat,lon);
         return users;
     }
 
     @GetMapping("/user/{id}")
-    public Utilisateur getById(@PathVariable("id") int id){
+    public Utilisateur getById(@PathVariable("id") String id){
         Optional<Utilisateur> user = service.getUserById(id);
         return user.orElseGet(Utilisateur::new);
     }
@@ -88,13 +81,13 @@ public class UtilisateurController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") int id){
+    public ResponseEntity deleteUser(@PathVariable("id") String id){
         this.service.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity modifyUser(@PathVariable("id") int id, @RequestBody Utilisateur user){
+    public ResponseEntity modifyUser(@PathVariable("id") String id, @RequestBody Utilisateur user){
         this.service.updateUser(user,id);
         return ResponseEntity.noContent().build();
     }
