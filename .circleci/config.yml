@@ -35,7 +35,7 @@ workflows:
   version: 2
   tests:
     jobs:
-      - maven/test
+      
       - install_node_test_project
       - node_test_1:
           requires:
@@ -48,3 +48,5 @@ workflows:
       - node_test_3:
           requires:
             - install_node_test_project
+
+      - maven/test
