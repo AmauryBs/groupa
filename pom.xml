@@ -35,6 +35,15 @@
         </profile>
 
         <profile>
+            <id>test</id>
+            <properties>
+                <activatedProperties>test</activatedProperties>
+                <h2.scope>compile</h2.scope>
+                <spring.profile.from.maven>test</spring.profile.from.maven>
+            </properties>
+        </profile>
+
+        <profile>
             <id>prod</id>
             <properties>
                 <activatedProperties>prod</activatedProperties>
