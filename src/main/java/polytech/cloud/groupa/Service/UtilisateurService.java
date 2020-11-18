@@ -61,8 +61,8 @@ public class UtilisateurService {
 
     public List<Utilisateur> getUsersWithAgeEq(int age, int limit){
         Pageable limitUser = PageRequest.of(0,limit);
-        Date date = new Date();
-        Date dateMax = new Date();
+        Date date;
+        Date dateMax;
         Calendar cal = Calendar.getInstance();
         Calendar calMax = Calendar.getInstance();
         cal.add(Calendar.YEAR, -age);
@@ -110,8 +110,8 @@ public class UtilisateurService {
         if(UserToUpdate.isPresent()){
             Utilisateur User = UserToUpdate.get();
 
-            if(User.getBirthDate()!=user.getBirthDate()){
-                User.setBirthDate(user.getBirthDate());
+            if(User.getBirthDay()!=user.getBirthDay()){
+                User.setBirthDay(user.getBirthDay());
             }
             if(User.getFirstName()!=user.getFirstName()){
                 User.setFirstName(user.getFirstName());

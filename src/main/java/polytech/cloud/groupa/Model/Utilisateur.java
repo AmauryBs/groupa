@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "Users", schema = "Projet_cloud", catalog = "")
+@Table(name = "Users", catalog = "")
 public class Utilisateur {
     private String Id;
     private String FirstName;
     private String LastName;
-    private Date BirthDate;
+    private Date BirthDay;
     private Long lat;
     private Long lon;
 
@@ -23,8 +23,8 @@ public class Utilisateur {
 
     @Basic
     @Column(name = "birthday", nullable = true)
-    public Date getBirthDate() {
-        return BirthDate;
+    public Date getBirthDay() {
+        return BirthDay;
     }
 
     @Basic
@@ -39,8 +39,8 @@ public class Utilisateur {
         return LastName;
     }
 
-    public void setBirthDate(Date birthDate) {
-        BirthDate = birthDate;
+    public void setBirthDay(Date birthDate) {
+        BirthDay = birthDate;
     }
 
     public void setFirstName(String firstName) {
