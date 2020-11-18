@@ -25,11 +25,11 @@ jobs:
 
 
 workflows:
-  version: 2
+  version: 2.1
   tests:
     jobs:
       
       - install_node_test_project
       - node_tests:
-          requires:
+          required:
             - install_node_test_project
