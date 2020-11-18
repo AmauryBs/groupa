@@ -9,7 +9,6 @@ jobs:
     steps:
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
       - run: npm install
-    parallelism: 4
 
   node_test_1:
     docker:
@@ -44,3 +43,5 @@ workflows:
       - node_test_3:
           requires:
             - install_node_test_project
+
+    parallelism: 4
