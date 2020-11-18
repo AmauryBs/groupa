@@ -8,8 +8,7 @@ jobs:
     docker:
       - image: circleci/node:4.1.0
     steps:
-      - run:
-        command: git clone https://github.com/Slashgear/cloud-client-eval.git
+      - run: git clone https://github.com/Slashgear/cloud-client-eval.git
       - run: npm install
 
   node_test_1:
