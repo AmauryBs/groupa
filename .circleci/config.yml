@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   maven: circleci/maven@1.0.0
-  node: circleci/node@2.0.2
+  node: circleci/node@4.1.0
 
 jobs:
   install_node_test_project:
@@ -13,5 +13,4 @@ jobs:
         command: npm install
 workflows:
   node_test:
-    - install_node_test_project:
-      command: npm run step:1
+    - install_node_test_project
