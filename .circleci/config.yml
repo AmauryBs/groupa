@@ -14,26 +14,9 @@ jobs:
       - run: cd ./cloud-client-eval && npm run step:3
       - run: cd ./cloud-client-eval && npm run step:3bis
       
-
-  node_tests:
-    executor: node/default
-    steps:
-      - checkout
-      - run: cd ./cloud-client-eval && npm run step:1
-      - run: cd ./cloud-client-eval && npm run step:1
-      - run: cd ./cloud-client-eval && npm run step:2
-      - run: cd ./cloud-client-eval && npm run step:3
-      - run: cd ./cloud-client-eval && npm run step:3bis
-
-    parallelism: 4
-
-
 workflows:
   version: 2
   tests:
     jobs:
       #- maven/test
       - install_node_test_project
-      #- node_tests:
-          #requires:
-           # - install_node_test_project
