@@ -1,11 +1,11 @@
-version: 2
+version: 2.1
 orbs:
   maven: circleci/maven@1.0.0
 jobs:
   install_node_test_project:
     docker: 
       image: circleci/node:latest
-      image: circleci/mysql:8.0.4
+      - image: circleci/mysql:8.0.4
       environment:
         MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
         MYSQL_USER: urxmgpnqgbgcomuu
