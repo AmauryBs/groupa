@@ -2,49 +2,51 @@ package polytech.cloud.groupa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
 
 @Entity
-public class Utilisateur {
-    private String Id;
-    private String FirstName;
-    private String LastName;
-    private Date BirthDate;
+@Table(name = "Users")
+public class User {
+    private String id;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
     private Long lat;
     private Long lon;
 
 
     @Id
     public String getId(){
-        return this.Id;
+        return this.id;
     }
 
     public Date getBirthDate() {
-        return BirthDate;
+        return birthDate;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setBirthDate(Date birthDate) {
-        BirthDate = birthDate;
+        this.birthDate = birthDate;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public Long getLat() {

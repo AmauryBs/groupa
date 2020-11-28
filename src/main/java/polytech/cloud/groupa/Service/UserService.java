@@ -2,29 +2,29 @@ package polytech.cloud.groupa.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import polytech.cloud.groupa.Model.Utilisateur;
-import polytech.cloud.groupa.Repository.UtilisateurRepository;
+import polytech.cloud.groupa.Model.User;
+import polytech.cloud.groupa.Repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UtilisateurService {
+public class UserService {
 
     @Autowired
-    UtilisateurRepository repository;
+    UserRepository repository;
 
-    public UtilisateurService(UtilisateurRepository repo){
+    public UserService(UserRepository repo){
         this.repository = repo;
     }
 
-    public List<Utilisateur> getAllUsers(){return repository.findAll();}
+    public List<User> getAllUsers(){return repository.findAll();}
 
-    public Optional<Utilisateur> getUserById(int Id){
+    public Optional<User> getUserById(int Id){
         return repository.findById(Id);
     }
 
-    public void addUser(Utilisateur user){
+    public void addUser(User user){
         this.repository.save(user);
     }
 
@@ -36,15 +36,15 @@ public class UtilisateurService {
         this.repository.deleteAll();
     }
 
-    public void modifyAllUser(List<Utilisateur> users){
+    public void modifyAllUser(List<User> users){
         this.repository.deleteAll();
         this.repository.saveAll(users);
     }
 
-    public void updateUser(Utilisateur user, int id){
-        Optional<Utilisateur> UserToUpdate = this.repository.findById(id);
+    public void updateUser(User user, int id){
+        Optional<User> UserToUpdate = this.repository.findById(id);
         if(UserToUpdate.isPresent()){
-            Utilisateur User = UserToUpdate.get();
+            User User = UserToUpdate.get();
 
             if(User.getBirthDate()!=user.getBirthDate()){
                 User.setBirthDate(user.getBirthDate());
