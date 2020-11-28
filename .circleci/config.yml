@@ -4,6 +4,7 @@ orbs:
   maven: circleci/maven@0.0.12
 
 workflows:
-  owasp_dependency_test:
+  maven_test:
     jobs:
-      - maven/owasp-dependency-check # checkout, build, test, and upload test results
+      - maven/test # checkout, build, test, and upload test results
+      command: clean install -Powasp-dependency-check
