@@ -11,7 +11,7 @@ public class User {
     private String id;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private Date birthDay;
     private Long lat;
     private Long lon;
 
@@ -21,8 +21,8 @@ public class User {
         return this.id;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Date getBirthDay() {
+        return birthDay;
     }
 
     public String getFirstName() {
@@ -33,8 +33,8 @@ public class User {
         return lastName;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
     }
 
     public void setFirstName(String firstName) {

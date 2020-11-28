@@ -46,8 +46,8 @@ public class UserService {
         if(UserToUpdate.isPresent()){
             User User = UserToUpdate.get();
 
-            if(User.getBirthDate()!=user.getBirthDate()){
-                User.setBirthDate(user.getBirthDate());
+            if(User.getBirthDay()!=user.getBirthDay()){
+                User.setBirthDay(user.getBirthDay());
             }
             if(User.getFirstName()!=user.getFirstName()){
                 User.setFirstName(user.getFirstName());
