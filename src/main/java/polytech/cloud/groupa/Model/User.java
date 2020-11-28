@@ -1,18 +1,29 @@
 package polytech.cloud.groupa.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "Users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true, updatable = false)
     private String id;
+
+    @Column(name = "firstName", nullable = false, length = 255)
     private String firstName;
+
+    @Column(name = "lastName", nullable = false, length = 255)
     private String lastName;
+
+    @Column(name = "birthDay", nullable = false)
     private Date birthDay;
+
+    @Column(name = "lat", nullable = false)
     private Long lat;
+
+    @Column(name = "lon", nullable = false)
     private Long lon;
 
 
