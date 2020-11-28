@@ -21,10 +21,10 @@ public class User {
     private Date birthDay;
 
     @Column(name = "lat", nullable = false)
-    private Long lat;
+    private float lat;
 
     @Column(name = "lon", nullable = false)
-    private Long lon;
+    private float lon;
 
 
     @Id
@@ -60,19 +60,19 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Long getLat() {
+    public float getLat() {
         return lat;
     }
 
-    public Long getLon() {
+    public float getLon() {
         return lon;
     }
 
-    public void setLat(Long lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
 
-    public void setLon(Long lon) {
+    public void setLon(float lon) {
         this.lon = lon;
     }
 }
