@@ -2,9 +2,11 @@ package polytech.cloud.groupa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
 
 @Entity
+@Table(name = "Users")
 public class Utilisateur {
     private String Id;
     private String FirstName;
