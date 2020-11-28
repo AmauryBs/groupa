@@ -6,5 +6,5 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - maven/test: # checkout, build, test, and upload test results
-      command: clean install -Powasp-dependency-check
+      - maven/test:
+          command: clean install -Powasp-dependency-check
