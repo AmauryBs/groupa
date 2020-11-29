@@ -15,11 +15,8 @@ jobs:
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
 
   clean_install:
-    docker: 
-      - image: cimg/openjdk:11.0.9
-
     steps:
-      - run: maven clean install
+      - run: maven-build
 
       
 workflows:
