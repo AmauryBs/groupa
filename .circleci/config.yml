@@ -16,7 +16,7 @@ jobs:
 
   clean_install:
     docker: 
-      - image: circleci/openjdk:11.0.9
+      - image: cimg/openjdk:11.0.9
 
     steps:
       - run: maven clean install
