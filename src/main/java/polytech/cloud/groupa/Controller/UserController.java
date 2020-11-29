@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/")
-public class UtilisateurController {
-    private UtilisateurService service;
+public class UserController {
+    private UserService service;
 
     @Autowired
     public UserController(UserService services){
