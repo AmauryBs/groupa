@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - run: mvn clean install
-      - run: mvn build 
+      - run: mvn verify 
       - run: ls
       - run: java -jar 0.0.1-SNAPSHOT.jar&
 
