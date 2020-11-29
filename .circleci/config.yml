@@ -13,17 +13,10 @@ jobs:
           MYSQL_USER: urxmgpnqgbgcomuu
           MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
     steps:
+      - run : maven build -Ptest
+      - run : java -jar monjar.jar&
+      - run : wait 4
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
-     # - run: cd ./cloud-client-eval &&
-      - run: cd ./cloud-client-eval && npm install
-
-      - run: cd ./cloud-client-eval && npm run step:1
-
-      - run: cd ./cloud-client-eval && npm run step:2
-
-      - run: cd ./cloud-client-eval && npm run step:3
-
-      - run: cd ./cloud-client-eval &&  npm run step:3bis
 
       
 workflows:
