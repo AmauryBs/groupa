@@ -8,8 +8,6 @@ jobs:
       - checkout
       - run : maven clean install -Powasp-dependency-check
 workflows:
-  version: 2
-
   owasp-test:
     jobs:
       -owasp
