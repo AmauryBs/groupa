@@ -12,14 +12,26 @@ jobs:
           MYSQL_USER: urxmgpnqgbgcomuu
           MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
     steps:
+      - run: git clone https://github.com/Slashgear/cloud-client-eval.git
+      - run: cd ./cloud-client-eval && npm install
+
+      - run: cd ./cloud-client-eval && npm run step:1
+
+      - run: cd ./cloud-client-eval && npm run step:2
+
+      - run: cd ./cloud-client-eval && npm run step:3
+
+      - run: cd ./cloud-client-eval &&  npm run step:3bis
+
+  clean_install:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
       - checkout
       - run: mvn clean install
       - run: mvn verify 
       - run: ls
       - run: java -jar 0.0.1-SNAPSHOT.jar&
-      - run: git clone https://github.com/Slashgear/cloud-client-eval.git
-
-      
 
       
 workflows:
@@ -27,4 +39,7 @@ workflows:
   tests:
     jobs:
       #- maven/test
-      - install_node_test_project
+      - clean_install
+      - install_node_test_project:
+          requires:
+            - clean_install
