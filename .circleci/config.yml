@@ -19,8 +19,8 @@ jobs:
       - image: circleci/openjdk:stretch
     steps:
       - checkout
+      - run: mvn clean install
       - run: mvn build 
-      - run: maven build 
       - run: ls
       - run: java -jar 0.0.1-SNAPSHOT.jar&
 
