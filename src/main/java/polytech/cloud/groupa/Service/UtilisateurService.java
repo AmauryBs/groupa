@@ -4,16 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import polytech.cloud.groupa.Model.Position;
 import polytech.cloud.groupa.Model.Utilisateur;
+import polytech.cloud.groupa.Repository.PositionRepository;
 import polytech.cloud.groupa.Repository.UtilisateurRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class UtilisateurService {
 
     @Autowired
-    UtilisateurRepository repository;
+    private UtilisateurRepository repository;
+    @Autowired
+    private PositionRepository repo;
 
     public UtilisateurService(UtilisateurRepository repo){
         this.repository = repo;
@@ -25,16 +31,24 @@ public class UtilisateurService {
         return repository.findById(Id);
     }
 
-    public void addUser(Utilisateur user){
+    public void addUser(Utilisateur user, Position position){
         this.repository.save(user);
+        this.repo.save(position);
     }
 
     public void deleteUser(String id) {
+        this.repo.deleteWithId(getUserById(id).get().getPositionId());
         this.repository.deleteWithId(id);
     }
 
     public void deleteAllUser(){
         this.repository.deleteAll();
+        this.repo.deleteAll();
+    }
+
+    public Date transformDate(Date d) throws ParseException {
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(d.toString());
+        return date;
     }
 
     public void modifyAllUser(List<Utilisateur> users){
@@ -85,6 +99,8 @@ public class UtilisateurService {
     public float calculateDistance(float lat, float Long, float latuser, float longuser){
         return Math.abs(lat-latuser)+Math.abs(Long - longuser);
     }
+    //A Refaire
+    /*
     public List<Utilisateur> getNearestUser(float lat, float lon){
         //Pageable limit = PageRequest.of(0,10);
         List<Utilisateur> users = repository.findAll();
@@ -103,7 +119,7 @@ public class UtilisateurService {
             }
         }
         return users;
-    }
+    }*/
 
     public void updateUser(Utilisateur user, String id){
         Optional<Utilisateur> UserToUpdate = this.repository.findById(id);
@@ -119,13 +135,9 @@ public class UtilisateurService {
             if(User.getLastName()!=user.getLastName()){
                 User.setLastName(user.getLastName());
             }
-            if(User.getLat()!=user.getLat()){
-                User.setLat(user.getLat());
+            if(User.getPositionId()!=user.getPositionId()){
+                User.setPositionId(user.getPositionId());
             }
-            if(User.getLon()!=user.getLon()){
-                User.setLon(user.getLon());
-            }
-
             this.repository.save(User);
         }
 

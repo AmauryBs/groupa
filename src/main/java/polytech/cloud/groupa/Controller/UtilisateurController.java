@@ -4,18 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import polytech.cloud.groupa.Classes.UserFormatted;
+import polytech.cloud.groupa.Model.Position;
 import polytech.cloud.groupa.Model.Utilisateur;
+import polytech.cloud.groupa.Service.PositionService;
 import polytech.cloud.groupa.Service.UtilisateurService;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class UtilisateurController {
-    private UtilisateurService service;
-
     @Autowired
+    private UtilisateurService service;
+    @Autowired
+    private PositionService pos;
+
     public UtilisateurController(UtilisateurService services){
         this.service = services;
     }
@@ -27,50 +34,78 @@ public class UtilisateurController {
     //}
 
     @GetMapping("/user")
-    public List<Utilisateur> getAllByPage(@DefaultValue("0") @RequestParam(name = "page") int page){
+    public List<UserFormatted> getAllByPage(@DefaultValue("0") @RequestParam(name = "page") int page) throws ParseException {
         List<Utilisateur> users = service.getNUser(page);
-        return users;
+        List<UserFormatted> userFormatteds = new ArrayList<>();
+        for(int i=0;i<users.size();i++){
+            userFormatteds.add(new UserFormatted(users.get(i),pos.getById(users.get(i).getPositionId()).get()));
+            userFormatteds.get(i).setBirthDay((Date) service.transformDate(userFormatteds.get(i).getBirthDay()));
+        }
+        return userFormatteds;
     }
 
     @GetMapping(value = "/user/age" , params = "gt")
-    public List<Utilisateur> getUserWithAgeSup(@DefaultValue("0") @RequestParam(name = "gt") int gt){
+    public List<UserFormatted> getUserWithAgeSup(@DefaultValue("0") @RequestParam(name = "gt") int gt) throws ParseException {
         List<Utilisateur> users = service.getUsersWithAgeSup(gt,100);
-        return users;
+        List<UserFormatted> userFormatteds = new ArrayList<>();
+        for(int i=0;i<users.size();i++){
+            userFormatteds.add(new UserFormatted(users.get(i),pos.getById(users.get(i).getPositionId()).get()));
+            userFormatteds.get(i).setBirthDay((Date) service.transformDate(userFormatteds.get(i).getBirthDay()));
+        }
+        return userFormatteds;
     }
 
     @GetMapping(value = "/user/age", params = "eq")
-    public List<Utilisateur> getUserWithAgeEq(@DefaultValue("0") @RequestParam(name = "eq") int eq){
+    public List<UserFormatted> getUserWithAgeEq(@DefaultValue("0") @RequestParam(name = "eq") int eq) throws ParseException {
         List<Utilisateur> users = service.getUsersWithAgeEq(eq,100);
-        return users;
+        List<UserFormatted> userFormatteds = new ArrayList<>();
+        for(int i=0;i<users.size();i++){
+            userFormatteds.add(new UserFormatted(users.get(i),pos.getById(users.get(i).getPositionId()).get()));
+            userFormatteds.get(i).setBirthDay((Date) service.transformDate(userFormatteds.get(i).getBirthDay()));
+        }
+        return userFormatteds;
     }
 
     @GetMapping("/user/search")
-    public List<Utilisateur> getAllUserByName(@DefaultValue("toto") @RequestParam(name = "term") String term){
+    public List<UserFormatted> getAllUserByName(@DefaultValue("toto") @RequestParam(name = "term") String term) throws ParseException {
         List<Utilisateur> users = service.getAllUsersByName(term,100);
-        return users;
+        List<UserFormatted> userFormatteds = new ArrayList<>();
+        for(int i=0;i<users.size();i++){
+            userFormatteds.add(new UserFormatted(users.get(i),pos.getById(users.get(i).getPositionId()).get()));
+            userFormatteds.get(i).setBirthDay((Date) service.transformDate(userFormatteds.get(i).getBirthDay()));
+        }
+        return userFormatteds;
     }
 
     @GetMapping("/user/nearest")
-    public List<Utilisateur> getNearestUsers(@RequestParam(value = "lat") float lat, @RequestParam(value = "lon") float lon){
+    public List<UserFormatted> getNearestUsers(@RequestParam(value = "lat") float lat, @RequestParam(value = "lon") float lon) throws ParseException {
         List<Utilisateur> users = service.getNearestUser(lat,lon);
-        return users;
+        List<UserFormatted> userFormatteds = new ArrayList<>();
+        for(int i=0;i<users.size();i++){
+            userFormatteds.add(new UserFormatted(users.get(i),pos.getById(users.get(i).getPositionId()).get()));
+            userFormatteds.get(i).setBirthDay((Date) service.transformDate(userFormatteds.get(i).getBirthDay()));
+        }
+        return userFormatteds;
     }
 
     @GetMapping("/user/{id}")
-    public Utilisateur getById(@PathVariable("id") String id){
+    public UserFormatted getById(@PathVariable("id") String id) throws ParseException {
         Optional<Utilisateur> user = service.getUserById(id);
-        return user.orElseGet(Utilisateur::new);
+        UserFormatted userFormatted = new UserFormatted(user.get(),pos.getById(user.get().getPositionId()).get());
+        userFormatted.setBirthDay((Date) service.transformDate(userFormatted.getBirthDay()));
+        return userFormatted;
     }
 
     @PutMapping("/user")
-    public ResponseEntity modifyAllUser(@RequestBody List<Utilisateur> users){
+    public ResponseEntity modifyAllUser(@RequestBody List<Utilisateur> users, @RequestBody List<Position> positions){
         this.service.modifyAllUser(users);
+        this.pos.modifyAllPosition(positions);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/user")
-    public ResponseEntity addUser(@RequestBody Utilisateur user){
-        this.service.addUser(user);
+    public ResponseEntity addUser(@RequestBody Utilisateur user, @RequestBody Position position){
+        this.service.addUser(user,position);
         return ResponseEntity.noContent().build();
     }
 
@@ -87,8 +122,9 @@ public class UtilisateurController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity modifyUser(@PathVariable("id") String id, @RequestBody Utilisateur user){
+    public ResponseEntity modifyUser(@PathVariable("id") String id, @RequestBody Utilisateur user, @RequestBody Position position){
         this.service.updateUser(user,id);
+        this.pos.updatePosition(position,user.getPositionId());
         return ResponseEntity.noContent().build();
     }
 

@@ -10,8 +10,7 @@ public class Utilisateur {
     private String FirstName;
     private String LastName;
     private Date BirthDay;
-    private Long lat;
-    private Long lon;
+    private int positionId;
 
 
     @Id
@@ -56,22 +55,12 @@ public class Utilisateur {
     }
 
     @Basic
-    @Column(name = "lat", nullable = true, length = 100)
-    public Long getLat() {
-        return lat;
+    @Column(name = "positionid", nullable = false, length = 255)
+    public int getPositionId() {
+        return positionId;
     }
 
-    @Basic
-    @Column(name = "long", nullable = true, length = 100)
-    public Long getLon() {
-        return lon;
-    }
-
-    public void setLat(Long lat) {
-        this.lat = lat;
-    }
-
-    public void setLon(Long lon) {
-        this.lon = lon;
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
     }
 }
