@@ -27,6 +27,6 @@ workflows:
   tests:
     jobs:
       #- maven/test
-      - install_node_test_project
+      - install_node_test_project:
         requires:
           - install
