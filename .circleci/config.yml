@@ -1,9 +1,15 @@
 version: 2.1
 
-orbs:
-  maven: circleci/maven@1.0.3
-
+jobs:
+  owasp:
+    docker:
+      - image: circleci/openjdk:11.0.9
+    steps:
+      - checkout
+      - run : maven clean install -Powasp-dependency-check
 workflows:
-  maven_test:
+  version: 2
+
+  owasp-test:
     jobs:
-      - maven/owasp-dependency-check
+      -owasp
