@@ -14,19 +14,13 @@ jobs:
     steps:
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
 
-  clean_install:
-    docker:
-      - image: circleci/openjdk:stretch
-    steps:
-      - run: ./mvnw clean install
-
       
 workflows:
   version: 2
   tests:
     jobs:
       #- maven/test
-      - clean_install
+      - maven/build
       - install_node_test_project:
           requires:
-            - clean_install
+            - maven/build
