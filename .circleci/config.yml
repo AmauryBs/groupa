@@ -1,13 +1,15 @@
-version: 2.1
+version: 2.0
 
 jobs:
-  owasp:
+  test:
     docker:
-      - image: circleci/openjdk:11.0.9
+      - image: circleci/openjdk:stretch
     steps:
       - checkout
-      - run : maven clean install -Powasp-dependency-check
+      - run: ./mvnw clean install -Powasp-dependency-check
 workflows:
-  owasp-test:
+  version: 2
+
+  build-then-test:
     jobs:
-      -owasp
+      - test
