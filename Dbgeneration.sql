@@ -5,5 +5,5 @@ CREATE TABLE Users (
     `lastName` VARCHAR(255),
     `birthDay` DATE,
     `lat` FLOAT,
-    `long` FLOAT,
+    `lon` FLOAT,
     PRIMARY KEY (id));
