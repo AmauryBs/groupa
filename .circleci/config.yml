@@ -8,6 +8,8 @@ jobs:
 
       - image: circleci/mysql:latest
 
+      - image: cimg/openjdk:11.0.9
+
         environment:
           MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
           MYSQL_USER: urxmgpnqgbgcomuu
