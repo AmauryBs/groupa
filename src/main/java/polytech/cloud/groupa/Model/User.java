@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
-    private String id;
+    private Integer id;
 
     @Column(name = "firstName", nullable = false, length = 255)
     private String firstName;
@@ -27,10 +27,10 @@ public class User {
     private float lon;
 
 
-    @Id
-    public String getId(){
+    /*@Id
+    public Integer getId(){
         return this.id;
-    }
+    }*/
 
     public Date getBirthDay() {
         return birthDay;
@@ -52,9 +52,8 @@ public class User {
         this.firstName = firstName;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+   /* public void setId(Integer id) {
+    }*/
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
