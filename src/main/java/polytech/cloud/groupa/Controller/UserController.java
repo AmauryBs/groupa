@@ -3,8 +3,8 @@ package polytech.cloud.groupa.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import polytech.cloud.groupa.Model.Utilisateur;
-import polytech.cloud.groupa.Service.UtilisateurService;
+import polytech.cloud.groupa.Model.User;
+import polytech.cloud.groupa.Service.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,30 +15,30 @@ public class UtilisateurController {
     private UtilisateurService service;
 
     @Autowired
-    public UtilisateurController(UtilisateurService services){
+    public UserController(UserService services){
         this.service = services;
     }
 
     @GetMapping("/user")
-    public List<Utilisateur> getAll(){
-        List<Utilisateur> users = service.getAllUsers();
+    public List<User> getAll(){
+        List<User> users = service.getAllUsers();
         return users;
     }
 
     @GetMapping("/user/{id}")
-    public Utilisateur getById(@PathVariable("id") int id){
-        Optional<Utilisateur> user = service.getUserById(id);
-        return user.orElseGet(Utilisateur::new);
+    public User getById(@PathVariable("id") int id){
+        Optional<User> user = service.getUserById(id);
+        return user.orElseGet(User::new);
     }
 
     @PutMapping("/user")
-    public ResponseEntity modifyAllUser(@RequestBody List<Utilisateur> users){
+    public ResponseEntity modifyAllUser(@RequestBody List<User> users){
         this.service.modifyAllUser(users);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/user")
-    public ResponseEntity addUser(@RequestBody Utilisateur user){
+    public ResponseEntity addUser(@RequestBody User user){
         this.service.addUser(user);
         return ResponseEntity.noContent().build();
     }
@@ -56,7 +56,7 @@ public class UtilisateurController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity modifyUser(@PathVariable("id") int id, @RequestBody Utilisateur user){
+    public ResponseEntity modifyUser(@PathVariable("id") int id, @RequestBody User user){
         this.service.updateUser(user,id);
         return ResponseEntity.noContent().build();
     }
