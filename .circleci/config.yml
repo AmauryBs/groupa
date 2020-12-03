@@ -36,7 +36,7 @@ jobs:
       - run: cd ./cloud-client-eval &&  npm run step:3bis
 
   clean_install:
-    executor: execsForProj
+    executor: execs
     steps:
       - checkout
       - run: mvn clean install
@@ -48,7 +48,7 @@ jobs:
 
       
 workflows:
-  version: 2.1
+  version: 2
   tests:
     jobs:
       #- maven/test
