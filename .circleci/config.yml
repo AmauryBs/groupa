@@ -1,0 +1,15 @@
+version: 2.0
+
+jobs:
+  test:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
+      - checkout
+      - run: mvn clean install -Powasp-dependency-check
+workflows:
+  version: 2
+
+  build-then-test:
+    jobs:
+      - test
