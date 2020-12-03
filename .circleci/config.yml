@@ -13,7 +13,6 @@ jobs:
       - checkout
       - run: mvn clean verify
       - run: java -jar 0.0.1-SNAPSHOT.jar&
-      - run: wait 4
       - run: apt-get update
       - run: apt-get install nodejs npm
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
