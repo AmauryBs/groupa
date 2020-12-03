@@ -1,6 +1,6 @@
 USE `bltnqtwwulzbsp3yfedg`;
 
-DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Position;
 
  CREATE TABLE Position (
