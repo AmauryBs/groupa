@@ -1,5 +1,8 @@
 USE `bltnqtwwulzbsp3yfedg`;
 
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Position;
+
  CREATE TABLE Position (
     `PositionID` int NOT NULL AUTO_INCREMENT,
     `lat` FLOAT,
