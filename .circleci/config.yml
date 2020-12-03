@@ -36,7 +36,14 @@ jobs:
       - run: cd ./cloud-client-eval &&  npm run step:3bis
 
   clean_install:
-    executor: execs
+    docker: 
+      - image: circleci/openjdk:stretch
+      - image: circleci/node:latest
+      - image: circleci/mysql:latest
+        environment:
+          MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
+          MYSQL_USER: urxmgpnqgbgcomuu
+          MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
     steps:
       - checkout
       - run: docker run -d -h node --name node node:latest
