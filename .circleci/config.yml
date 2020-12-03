@@ -32,8 +32,8 @@ jobs:
       - run: mvn verify 
       - run: java -jar 0.0.1-SNAPSHOT.jar&
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
-      #- run: apt-get update
-      #- run: apt-get install nodejs npm
+      - run: apt-get update
+      - run: apt-get install nodejs npm
 
 
       
