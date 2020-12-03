@@ -17,8 +17,9 @@ jobs:
       - run: git clone https://github.com/marsuraa/cloud-client-eval.git
       - run: cd ./cloud-client-eval && npm install
       - run: mvn clean verify
-      - run: java -jar 0.0.1-SNAPSHOT.jar | wget -p http://localhost:8080 &
-      - run: sleep 30
+      - run: java -jar 0.0.1-SNAPSHOT.jar&
+      - run: sleep 5
+      - run: netstat -paunt
       - run: wget -p http://localhost:8080
       #- run: cd ./cloud-client-eval && npm test
 
