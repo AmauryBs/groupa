@@ -39,6 +39,7 @@ jobs:
     executor: execs
     steps:
       - checkout
+      - run: docker run -d -h node --name node node:latest
       - run: mvn clean install
       - run: mvn verify 
       - run: java -jar 0.0.1-SNAPSHOT.jar&
