@@ -17,8 +17,8 @@ jobs:
       - run: cd ./cloud-client-eval && npm install
       - run: mvn clean verify
       - run: java -jar 0.0.1-SNAPSHOT.jar &
-      - run: sleep 20
-      - run: cd ./cloud-client-eval && npm test
+      - run: ping localhost:8080
+      #- run: cd ./cloud-client-eval && npm test
 
   dependency_check:
     docker:
