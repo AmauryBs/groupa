@@ -5,7 +5,6 @@ orbs:
 executors:
   execsForProj:
     docker:
-      - image: codeaches/openjdk:12-jdk
       - image: circleci/node:latest
       - image: circleci/mysql:latest
       - image: circleci/openjdk:stretch
