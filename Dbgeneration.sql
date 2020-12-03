@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS Position;
     `lon` FLOAT,
  PRIMARY KEY (PositionID));
  
-CREATE TABLE Users (
+CREATE TABLE User (
 	`id` int NOT NULL AUTO_INCREMENT,
     `firstName` VARCHAR(255),
     `lastName` VARCHAR(255),
