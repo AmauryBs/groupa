@@ -17,6 +17,7 @@ executors:
 jobs:
   install_node_test_project:
     docker: 
+      - image: circleci/openjdk:stretch
       - image: circleci/node:latest
       - image: circleci/mysql:latest
         environment:
