@@ -32,7 +32,7 @@ jobs:
       - run: mvn verify 
       - run: ls
       - run: java -jar 0.0.1-SNAPSHOT.jar&
-  test:
+  dependency_check:
     docker:
       - image: circleci/openjdk:stretch
     steps:
@@ -43,7 +43,7 @@ workflows:
 
   build-then-test:
     jobs:
-      - test
+      - dependency_check
       
   tests:
     jobs:
