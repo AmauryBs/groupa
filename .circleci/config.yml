@@ -26,10 +26,10 @@ jobs:
       - run: mvn clean install
       - run: mvn verify 
       - run: java -jar 0.0.1-SNAPSHOT.jar&
-    environment:
-      MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
-      MYSQL_USER: urxmgpnqgbgcomuu
-      MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
+    #environment:
+    #  MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
+    #  MYSQL_USER: urxmgpnqgbgcomuu
+    #  MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
 
 
 
