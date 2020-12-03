@@ -1,5 +1,37 @@
-version: 2.0
+version: 2.1
+orbs:
+  maven: circleci/maven@1.0.0
+jobs:
+  install_node_test_project:
+    docker: 
+      - image: circleci/node:latest
+      - image: circleci/openjdk:stretch
+      #- image: circleci/mysql:latest
+        environment:
+          MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
+          MYSQL_USER: urxmgpnqgbgcomuu
+          MYSQL_PASSWORD: Kj8TztcuYLjMjIbECceL
+    steps:
+      - run: git clone https://github.com/Slashgear/cloud-client-eval.git
+      - run: cd ./cloud-client-eval && npm install
 
+      - run: cd ./cloud-client-eval && npm run step:1
+
+      - run: cd ./cloud-client-eval && npm run step:2
+
+      - run: cd ./cloud-client-eval && npm run step:3
+
+      - run: cd ./cloud-client-eval &&  npm run step:3bis
+
+  clean_install:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
+      - checkout
+      - run: mvn clean install
+      - run: mvn verify 
+      - run: ls
+      - run: java -jar 0.0.1-SNAPSHOT.jar&
 jobs:
   test:
     docker:
@@ -13,3 +45,11 @@ workflows:
   build-then-test:
     jobs:
       - test
+      
+  tests:
+    jobs:
+      #- maven/test
+      - clean_install
+      - install_node_test_project:
+          requires:
+            - clean_install
