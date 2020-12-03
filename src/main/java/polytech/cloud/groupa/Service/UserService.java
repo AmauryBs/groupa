@@ -5,38 +5,39 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import polytech.cloud.groupa.Model.Position;
-import polytech.cloud.groupa.Model.Utilisateur;
+import polytech.cloud.groupa.Model.User;
 import polytech.cloud.groupa.Repository.PositionRepository;
-import polytech.cloud.groupa.Repository.UtilisateurRepository;
+import polytech.cloud.groupa.Repository.UserRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class UtilisateurService {
+public class UserService {
 
     @Autowired
-    private UtilisateurRepository repository;
+    private UserRepository repository;
+
     @Autowired
     private PositionRepository repo;
 
-    public UtilisateurService(UtilisateurRepository repo){
+    public UserService(UserRepository repo){
         this.repository = repo;
     }
 
-    public List<Utilisateur> getAllUsers(){return repository.findAll();}
+    public List<User> getAllUsers(){return repository.findAll();}
 
-    public Optional<Utilisateur> getUserById(String Id){
+    public Optional<User> getUserById(long Id){
         return repository.findById(Id);
     }
 
-    public void addUser(Utilisateur user, Position position){
+    public void addUser(User user, Position position){
         this.repository.save(user);
         this.repo.save(position);
     }
 
-    public void deleteUser(String id) {
+    public void deleteUser(long id) {
         this.repo.deleteWithId(getUserById(id).get().getPositionId());
         this.repository.deleteWithId(id);
     }
@@ -51,7 +52,7 @@ public class UtilisateurService {
         return date;
     }
 
-    public void modifyAllUser(List<Utilisateur> users){
+    public void modifyAllUser(List<User> users){
         this.repository.deleteAll();
         this.repository.saveAll(users);
     }
@@ -121,10 +122,10 @@ public class UtilisateurService {
         return users;
     }*/
 
-    public void updateUser(Utilisateur user, String id){
-        Optional<Utilisateur> UserToUpdate = this.repository.findById(id);
+    public void updateUser(User user, long id){
+        Optional<User> UserToUpdate = this.repository.findById(id);
         if(UserToUpdate.isPresent()){
-            Utilisateur User = UserToUpdate.get();
+            User User = UserToUpdate.get();
 
             if(User.getBirthDay()!=user.getBirthDay()){
                 User.setBirthDay(user.getBirthDay());

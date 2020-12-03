@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import polytech.cloud.groupa.Model.User;
+import polytech.cloud.groupa.Service.UserService;
 import polytech.cloud.groupa.Classes.UserFormatted;
 import polytech.cloud.groupa.Model.Position;
 import polytech.cloud.groupa.Model.Utilisateur;
@@ -17,13 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class UtilisateurController {
-    @Autowired
-    private UtilisateurService service;
-    @Autowired
-    private PositionService pos;
+@RequestMapping("/")
+public class UserController {
+    private UserService service;
 
-    public UtilisateurController(UtilisateurService services){
+    @Autowired
+    public UserController(UserService services){
         this.service = services;
     }
 
@@ -86,9 +87,15 @@ public class UtilisateurController {
             userFormatteds.get(i).setBirthDay((Date) service.transformDate(userFormatteds.get(i).getBirthDay()));
         }
         return userFormatteds;
+    public List<User> getAll(){
+        List<User> users = service.getAllUsers();
+        return users;
     }
 
     @GetMapping("/user/{id}")
+    public User getById(@PathVariable("id") long id){
+        Optional<User> user = service.getUserById(id);
+        return user.orElseGet(User::new);
     public UserFormatted getById(@PathVariable("id") String id) throws ParseException {
         Optional<Utilisateur> user = service.getUserById(id);
         UserFormatted userFormatted = new UserFormatted(user.get(),pos.getById(user.get().getPositionId()).get());
@@ -97,13 +104,15 @@ public class UtilisateurController {
     }
 
     @PutMapping("/user")
-    public ResponseEntity modifyAllUser(@RequestBody List<Utilisateur> users, @RequestBody List<Position> positions){
+    public ResponseEntity modifyAllUser(@RequestBody List<User> users, @RequestBody List<Position> positions){
         this.service.modifyAllUser(users);
         this.pos.modifyAllPosition(positions);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/user")
+    public ResponseEntity addUser(@RequestBody User user){
+        this.service.addUser(user);
     public ResponseEntity addUser(@RequestBody Utilisateur user, @RequestBody Position position){
         this.service.addUser(user,position);
         return ResponseEntity.noContent().build();
@@ -116,13 +125,13 @@ public class UtilisateurController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") String id){
+    public ResponseEntity deleteUser(@PathVariable("id") long id){
         this.service.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity modifyUser(@PathVariable("id") String id, @RequestBody Utilisateur user, @RequestBody Position position){
+    public ResponseEntity modifyUser(@PathVariable("id") long id, @RequestBody User user){
         this.service.updateUser(user,id);
         this.pos.updatePosition(position,user.getPositionId());
         return ResponseEntity.noContent().build();
