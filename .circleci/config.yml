@@ -23,7 +23,7 @@ jobs:
     executor: maven/default
     steps:
       - checkout
-      - run: mvn clean install
+      - run: mvn clean install -Ptest
       - run: mvn verify 
       - run: java -jar 0.0.1-SNAPSHOT.jar&
 
