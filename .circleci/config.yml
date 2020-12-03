@@ -5,28 +5,22 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
-  install_node_test_project:
-    executor: node/default
-    steps:
-      - run: git clone https://github.com/Slashgear/cloud-client-eval.git
-      - run: cd ./cloud-client-eval && npm install
 
-      - run: cd ./cloud-client-eval && npm run step:1
-
-      - run: cd ./cloud-client-eval && npm run step:2
-
-      - run: cd ./cloud-client-eval && npm run step:3
-
-      - run: cd ./cloud-client-eval &&  npm run step:3bis
-
-  clean_install:
-    executor: maven/default
+  clean_install_and_tests:
+    machine: # executor type
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - run: mvn clean verify
       - run: java -jar 0.0.1-SNAPSHOT.jar&
+      - run: git clone https://github.com/Slashgear/cloud-client-eval.git
+      - run: cd ./cloud-client-eval && npm install
+      - run: cd ./cloud-client-eval && npm run step:1
+      - run: cd ./cloud-client-eval && npm run step:2
+      - run: cd ./cloud-client-eval && npm run step:3
+      - run: cd ./cloud-client-eval &&  npm run step:3bis
 
-  test:
+  dependency_check:
     docker:
       - image: circleci/openjdk:stretch
     steps:
@@ -38,11 +32,12 @@ jobs:
       
 workflows:
   version: 2
+
+  build-then-test:
+    jobs:
+      - dependency_check
+
   tests:
     jobs:
-      - test
-      - clean_install
-      - install_node_test_project:
-          requires:
-            - clean_install
+      - clean_install_and_tests
       - maven/test
