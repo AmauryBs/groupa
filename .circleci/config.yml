@@ -13,6 +13,7 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install ufw
+      - run: sudo apt-get update
       - run: sudo apt-get install netstat
       - run: netstat -an | grep "LISTEN "
       - run: sudo iptables -I INPUT 1 -i eth0 -p all -j ACCEPT
