@@ -18,7 +18,7 @@ jobs:
       - run: cd ./cloud-client-eval && npm install
       - run: sudo apt-get install maven -y
       - run: mvn clean verify
-      - run: ls -a
+      - run: cd target && ls -a
       - run: java -jar 0.0.1-SNAPSHOT.jar
       - run: sleep 5
       - run: netstat -paunt
