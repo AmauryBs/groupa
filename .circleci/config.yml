@@ -25,15 +25,15 @@ jobs:
 
   clean_install:
     docker:
-      - image: circleci/openjdk:stretch
+      - image: circleci/openjdk:latest
     steps:
       - checkout
       - run: mvn clean install
       - run: mvn verify 
       - run: java -jar 0.0.1-SNAPSHOT.jar&
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
-      - run: apt-get update
-      - run: apt-get install nodejs npm
+      #- run: apt-get update
+      #- run: apt-get install nodejs npm
 
 
       
