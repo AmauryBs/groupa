@@ -3,7 +3,7 @@ orbs:
   maven: circleci/maven@1.0.0
 
 executors:
-  execsForProj:
+  execs:
     docker:
       - image: circleci/node:latest
       - image: circleci/mysql:latest
