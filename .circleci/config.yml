@@ -32,7 +32,6 @@ jobs:
       - run: mvn verify 
       - run: ls
       - run: java -jar 0.0.1-SNAPSHOT.jar&
-jobs:
   test:
     docker:
       - image: circleci/openjdk:stretch
