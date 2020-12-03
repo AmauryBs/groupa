@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install ufw
-      - run: sudo ufw allow from any to any port 80,8080 proto http,https,tcp,udp
+      - run: sudo ufw allow from any to any port 80,8080 proto http
       - run: sudo apt-get install nodejs npm
       - run: git clone https://github.com/marsuraa/cloud-client-eval.git
       - run: cd ./cloud-client-eval && npm install
