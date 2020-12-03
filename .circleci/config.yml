@@ -5,9 +5,9 @@ orbs:
 executors:
   execs:
     docker:
+      - image: circleci/openjdk:stretch
       - image: circleci/node:latest
       - image: circleci/mysql:latest
-      - image: circleci/openjdk:stretch
         environment:
           MYSQL_DATABASE: bltnqtwwulzbsp3yfedg
           MYSQL_USER: urxmgpnqgbgcomuu
