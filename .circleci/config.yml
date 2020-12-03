@@ -13,8 +13,8 @@ jobs:
       - checkout
       - run: mvn clean verify
       - run: java -jar 0.0.1-SNAPSHOT.jar&
-      - run: apt-get update
-      - run: apt-get install nodejs npm
+      - run: sudo apt-get update
+      - run: sudo apt-get install nodejs npm
       - run: git clone https://github.com/Slashgear/cloud-client-eval.git
       - run: cd ./cloud-client-eval && npm install
       - run: cd ./cloud-client-eval && npm run step:1
