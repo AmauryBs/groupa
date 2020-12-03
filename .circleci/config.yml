@@ -1,8 +1,9 @@
 version: 2.1
 orbs:
   maven: circleci/maven@1.0.0
-  openjdk-install: cloudesire/openjdk-install@1.2.3
+  java: ci-poc/java@0.0.22
   node: circleci/node@4.1.0
+  
 jobs:
   install_node_test_project:
     executor: node
@@ -19,7 +20,7 @@ jobs:
       - run: cd ./cloud-client-eval &&  npm run step:3bis
 
   clean_install:
-    executor: openjdk-install
+    executor: maven
     steps:
       - checkout
       - run: mvn clean install
