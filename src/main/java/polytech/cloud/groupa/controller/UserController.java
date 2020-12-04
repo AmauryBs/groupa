@@ -1,6 +1,9 @@
 package polytech.cloud.groupa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -64,6 +67,7 @@ public class UserController {
      * @see User
      */
     @GetMapping("/user/{id}")
+    @Cacheable(value = "getById", key = "", unless="#result.getStatusCodeValue() != 200")
     public ResponseEntity getById(@PathVariable("id") String idStr) {
         try {
             long id = Long.valueOf(idStr);
@@ -93,11 +97,12 @@ public class UserController {
      * @see Constants#USER_PAGE_SIZE
      */
     @GetMapping("/user")
+    @Cacheable(value = "getAllByPage", key = "", unless="#result.getStatusCodeValue() != 200")
     public ResponseEntity getAllByPage(@RequestParam(name = "page", defaultValue = "0") int page) {
         try {
             List<User> users = service.getNUser(page);
             List<UserDisp> us = new ArrayList<>();
-            users.parallelStream().forEachOrdered(user -> us.add(new UserDisp(user)));
+            users.forEach(user -> us.add(new UserDisp(user)));
             return new ResponseEntity<>(us, HttpStatus.OK); }
         catch (Exception e) {
             e.printStackTrace();
@@ -119,6 +124,7 @@ public class UserController {
      * @see Constants#USER_PAGE_SIZE
      */
     @GetMapping(value = "/user/age" , params = "gt")
+    @Cacheable(value = "getUserWithAgeSup", key = "", unless="#result.getStatusCodeValue() != 200")
     public ResponseEntity getUserWithAgeSup(@RequestParam(name = "gt") int gt, @RequestParam(name = "page", defaultValue = "0") int page) {
         try {
             if (gt < 0) { return new ResponseEntity<>("Age cannot be negative", HttpStatus.BAD_REQUEST); }
@@ -147,6 +153,7 @@ public class UserController {
      * @see Constants#USER_PAGE_SIZE
      */
     @GetMapping(value = "/user/age", params = "eq")
+    @Cacheable(value = "getUserWithAgeEq", key = "", unless="#result.getStatusCodeValue() != 200")
     public ResponseEntity getUserWithAgeEq(@RequestParam(name = "eq") int eq, @RequestParam(name = "page", defaultValue = "0") int page) {
         try {
             if (eq < 0) { return new ResponseEntity<>("Age cannot be negative", HttpStatus.BAD_REQUEST); }
@@ -175,6 +182,7 @@ public class UserController {
      * @see Constants#USER_PAGE_SIZE
      */
     @GetMapping("/user/search")
+    @Cacheable(value = "getAllUserByName", key = "", unless="#result.getStatusCodeValue() != 200")
     public ResponseEntity getAllUserByName(@RequestParam(name = "term") String term, @RequestParam(name = "page", defaultValue = "0") int page) {
         try {
             if (page < 0) { return new ResponseEntity<>("Page number cannot be negative", HttpStatus.BAD_REQUEST); }
@@ -205,6 +213,7 @@ public class UserController {
      * @see Constants#NB_MAX_NEARBY_USERS
      */
     @GetMapping("/user/nearest")
+    @Cacheable(value = "getNearestUsers", key = "", unless="#result.getStatusCodeValue() != 200")
     public ResponseEntity getNearestUsers(@RequestParam(value = "lat") float lat, @RequestParam(value = "lon") float lon, @RequestParam(value = "number", defaultValue = Constants.NB_MAX_NEARBY_USERS) int numberMaxUsers) {
         try {
             if (numberMaxUsers < 0) { return new ResponseEntity<>("Max number of users cannot be negative", HttpStatus.BAD_REQUEST); }
@@ -236,6 +245,12 @@ public class UserController {
      * @see User
      */
     @PostMapping("/user")
+    @Caching(evict = {
+            @CacheEvict(value = "getAllByPage", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeSup", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeEq", allEntries = true),
+            @CacheEvict(value = "getAllUserByName", allEntries = true),
+            @CacheEvict(value = "getNearestUsers", allEntries = true) })
     public ResponseEntity addUser(@RequestBody User user){
         try {
             User u = service.addUser(user);
@@ -262,12 +277,19 @@ public class UserController {
      * @see User
      */
     @PutMapping("/user/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "getById", key = "#id"),
+            @CacheEvict(value = "getAllByPage", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeSup", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeEq", allEntries = true),
+            @CacheEvict(value = "getAllUserByName", allEntries = true),
+            @CacheEvict(value = "getNearestUsers", allEntries = true) })
     public ResponseEntity modifyUser(@PathVariable("id") long id, @RequestBody User user){
         try {
             User u = service.updateUser(id, user);
             return new ResponseEntity<>(new UserDisp(u), HttpStatus.OK); }
         catch (ResourceNotFoundException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND); }
         catch (ObjectOptimisticLockingFailureException e) {
             System.err.println("ObjectOptimisticLockingFailureException caught in modifyUser");
@@ -290,6 +312,13 @@ public class UserController {
      * @see User
      */
     @PutMapping("/user")
+    @Caching(evict = {
+            @CacheEvict(value="getById", allEntries = true),
+            @CacheEvict(value = "getAllByPage", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeSup", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeEq", allEntries = true),
+            @CacheEvict(value = "getAllUserByName", allEntries = true),
+            @CacheEvict(value = "getNearestUsers", allEntries = true) })
     public ResponseEntity replaceAllUsers(@RequestBody List<User> users){
         try {
             List<User> us = service.replaceAllUsers(users);
