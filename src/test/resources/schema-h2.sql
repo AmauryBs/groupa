@@ -10,5 +10,8 @@ CREATE TABLE `User` (
                         `firstName` VARCHAR(255),
                         `lastName` VARCHAR(255),
                         `birthDay` DATE,
-                        `position` int,
-                        FOREIGN KEY (position) REFERENCES `Position` (positionId));
+                        `position` int);
+
+ ALTER TABLE `User`
+    ADD FOREIGN KEY (`position`)
+    REFERENCES `Position`(`positionId`);

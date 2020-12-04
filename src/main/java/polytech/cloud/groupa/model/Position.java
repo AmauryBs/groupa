@@ -15,12 +15,20 @@ public class Position implements Serializable {
     private long positionId;
 
     @Basic
-    @Column(name = "lat", nullable = false, precision = 8, scale = 8)
+    @Column(name = "lat", nullable = false, precision = 8, scale = 12)
     private BigDecimal lat;
 
     @Basic
-    @Column(name = "lon", nullable = false, precision = 8, scale = 8)
+    @Column(name = "lon", nullable = false, precision = 8, scale = 12)
     private BigDecimal lon;
+
+    public Position(BigDecimal lat, BigDecimal lon) {
+        this.lat = lat;
+        this.lon = lon;
+    }
+
+    public Position() {
+    }
 
 
     public long getPositionId(){

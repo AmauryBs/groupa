@@ -33,6 +33,13 @@ public class User implements Serializable {
     @JoinColumn(name = "position", referencedColumnName = "positionId", nullable=false)
     private Position position;
 
+    public User(String firstName, String lastName, Position position, Date birthday) {
+        this.firstName = firstName; this.lastName = lastName; this.position = position; this.birthDay = birthday;
+    }
+
+    public User() {
+    }
+
 
     public long getId(){
         return this.id;
