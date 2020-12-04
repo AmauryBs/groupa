@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This class represents a User object with all needed fields
+ * This class represents a User object with all needed fields.
  *
  * @author Ewald Janin, Felix Martelin
  */
