@@ -11,4 +11,4 @@ CREATE TABLE `User` (
                         `lastName` VARCHAR(255),
                         `birthDay` DATE,
                         `position` int,
-                        FOREIGN KEY (position) REFERENCES `Position` (positionId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                        FOREIGN KEY (position) REFERENCES `Position` (positionId));

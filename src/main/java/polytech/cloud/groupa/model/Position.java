@@ -28,7 +28,7 @@ public class Position implements Serializable {
      * @see BigDecimal
      */
     @Basic
-    @Column(name = "lat", nullable = false, precision = 8, scale = 12)
+    @Column(name = "lat", nullable = false, precision = 12, scale = 8)
     private BigDecimal lat;
 
     /**
@@ -37,7 +37,7 @@ public class Position implements Serializable {
      * @see BigDecimal
      */
     @Basic
-    @Column(name = "lon", nullable = false, precision = 8, scale = 12)
+    @Column(name = "lon", nullable = false, precision = 12, scale = 8)
     private BigDecimal lon;
 
 
