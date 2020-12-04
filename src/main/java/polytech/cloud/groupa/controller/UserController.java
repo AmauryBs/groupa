@@ -345,6 +345,13 @@ public class UserController {
      * @see User
      */
     @DeleteMapping("/user")
+    @Caching(evict = {
+            @CacheEvict(value="getById", allEntries = true),
+            @CacheEvict(value = "getAllByPage", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeSup", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeEq", allEntries = true),
+            @CacheEvict(value = "getAllUserByName", allEntries = true),
+            @CacheEvict(value = "getNearestUsers", allEntries = true) })
     public ResponseEntity deleteAllUser(){
         try {
             service.deleteAllUser();
@@ -366,6 +373,13 @@ public class UserController {
      * @see User
      */
     @DeleteMapping("/user/{id}")
+    @Caching(evict = {
+            @CacheEvict(value="getById", allEntries = true),
+            @CacheEvict(value = "getAllByPage", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeSup", allEntries = true),
+            @CacheEvict(value = "getUserWithAgeEq", allEntries = true),
+            @CacheEvict(value = "getAllUserByName", allEntries = true),
+            @CacheEvict(value = "getNearestUsers", allEntries = true) })
     public ResponseEntity deleteUser(@PathVariable("id") String idStr){
         try {
             long id = Long.valueOf(idStr);
