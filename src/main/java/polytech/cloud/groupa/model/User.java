@@ -29,7 +29,7 @@ public class User implements Serializable {
     @Column(name = "birthDay", nullable = false)
     private Date birthDay;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position", referencedColumnName = "positionId", nullable=false)
     private Position position;
 

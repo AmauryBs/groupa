@@ -3,6 +3,7 @@ package polytech.cloud.groupa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.*;
 import polytech.cloud.groupa.exceptions.ResourceNotFoundException;
 import polytech.cloud.groupa.model.User;
@@ -58,10 +59,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/age" , params = "gt")
-    public ResponseEntity getUserWithAgeSup(@RequestParam(name = "gt") int gt) {
+    public ResponseEntity getUserWithAgeSup(@RequestParam(name = "gt") int gt, @RequestParam(name = "page", defaultValue = "0") int page) {
         try {
             if (gt < 0) { return new ResponseEntity<>("Age cannot be negative", HttpStatus.BAD_REQUEST); }
-            List<User> users = service.getUsersWithAgeSup(gt,100);
+            List<User> users = service.getUsersWithAgeSup(gt, page);
             List<UserDisp> us = new ArrayList<>();
             users.forEach(user -> us.add(new UserDisp(user)));
             return new ResponseEntity<>(us, HttpStatus.OK); }
@@ -71,10 +72,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/age", params = "eq")
-    public ResponseEntity getUserWithAgeEq(@RequestParam(name = "eq") int eq) {
+    public ResponseEntity getUserWithAgeEq(@RequestParam(name = "eq") int eq, @RequestParam(name = "page", defaultValue = "0") int page) {
         try {
             if (eq < 0) { return new ResponseEntity<>("Age cannot be negative", HttpStatus.BAD_REQUEST); }
-            List<User> users = service.getUsersWithAgeEq(eq,100);
+            List<User> users = service.getUsersWithAgeEq(eq, page);
             List<UserDisp> us = new ArrayList<>();
             users.forEach(user -> us.add(new UserDisp(user)));
             return new ResponseEntity<>(us, HttpStatus.OK); }
@@ -84,9 +85,9 @@ public class UserController {
     }
 
     @GetMapping("/user/search")
-    public ResponseEntity getAllUserByName(@RequestParam(name = "term") String term) {
+    public ResponseEntity getAllUserByName(@RequestParam(name = "term") String term, @RequestParam(name = "page", defaultValue = "0") int page) {
         try {
-            List<User> users = service.getAllUsersByName(term,100);
+            List<User> users = service.getAllUsersByName(term, page);
             List<UserDisp> us = new ArrayList<>();
             users.forEach(user -> us.add(new UserDisp(user)));
             return new ResponseEntity<>(us, HttpStatus.OK); }
@@ -144,6 +145,10 @@ public class UserController {
         catch (ResourceNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND); }
+        catch (ObjectOptimisticLockingFailureException e) {
+            System.err.println("ObjectOptimisticLockingFailureException caught in modifyUser");
+            System.err.println(e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
         catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }

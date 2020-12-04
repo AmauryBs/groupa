@@ -94,45 +94,29 @@ public class UserService {
     public List<User> getNearestUsers(float lat, float lon, int nbMaxUsers) throws ResourceNotFoundException {
         List<Position> nearestPositions = positionRepo.findNearestPosition(lat, lon, nbMaxUsers);
         if (nearestPositions.isEmpty()) { throw new ResourceNotFoundException("position", "any field", "any value"); }
-        return userRepo.findByPositionIsIn(nearestPositions, PageRequest.of(0, nbMaxUsers));
+        return userRepo.findByPositionIsInAndOrderByPositionInList(nearestPositions, PageRequest.of(0, nbMaxUsers));
     }
 
-    @Transactional
     public User updateUser(long id, User user) throws ResourceNotFoundException {
-        User saved = null;
-        try {
-            Optional<User> toUpdate = userRepo.findById(id);
-            if (toUpdate.isPresent()) {
-                User oldUser = toUpdate.get();
-                Position oldPos = oldUser.getPosition();
-                boolean posUpdated = false;
-                if ((user.getFirstName() != null) && !("".equals(user.getFirstName()))) {
-                    oldUser.setFirstName(user.getFirstName());
-                }
-                if ((user.getLastName() != null) && !("".equals(user.getLastName()))) {
-                    oldUser.setLastName(user.getLastName());
-                }
-                if (user.getBirthDay() != null) {
-                    oldUser.setBirthDay(user.getBirthDay());
-                }
-                if (user.getPosition() != null && ((!Objects.equals(user.getPosition().getLat(), oldUser.getPosition().getLat())) || (!Objects.equals(user.getPosition().getLon(), oldUser.getPosition().getLon())))) {
-                    Position newpos = positionRepo.saveAndFlush(user.getPosition());
-                    posUpdated = true;
-                    oldUser.setPosition(newpos);
-                }
-                saved = userRepo.saveAndFlush(oldUser);
-                if (posUpdated) {
-                    positionRepo.delete(oldPos);
-                }
-            } else {
-                throw new ResourceNotFoundException("user", "id", id);
-            }
-        }
-        catch (ObjectOptimisticLockingFailureException e) {
-            System.out.println("Saved entity : " + saved.toString());
-            System.err.println(e.getLocalizedMessage()); }
-        finally {
+        Optional<User> toUpdate = userRepo.findById(id);
+        if (toUpdate.isPresent()) {
+            User oldUser = toUpdate.get();
+            Position oldPos = oldUser.getPosition();
+            boolean posUpdated = false;
+            if ((user.getFirstName() != null) && !("".equals(user.getFirstName()))) {
+                oldUser.setFirstName(user.getFirstName()); }
+            if ((user.getLastName() != null) && !("".equals(user.getLastName()))) {
+                oldUser.setLastName(user.getLastName()); }
+            if (user.getBirthDay() != null) {
+                oldUser.setBirthDay(user.getBirthDay()); }
+            if (user.getPosition() != null && ((!Objects.equals(user.getPosition().getLat(), oldUser.getPosition().getLat())) || (!Objects.equals(user.getPosition().getLon(), oldUser.getPosition().getLon())))) {
+                posUpdated = true; }
+            User saved = userRepo.save(oldUser);
+            if (posUpdated) {
+                positionRepo.delete(oldPos); }
             return saved; }
+        else {
+            throw new ResourceNotFoundException("user", "id", id); }
     }
 
     //TODO: A Refaire

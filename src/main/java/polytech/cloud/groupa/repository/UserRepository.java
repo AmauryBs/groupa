@@ -1,6 +1,7 @@
 package polytech.cloud.groupa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Repository;
 import polytech.cloud.groupa.model.Position;
@@ -21,7 +22,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByLastNameContains(String name, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
 
-    List<User> findByPositionIsIn(List<Position> positions, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
+    @Query(value = "SELECT u.id, u.firstName, u.lastName, u.birthDay, u.position " +
+            "FROM User u " +
+            "WHERE u.position IN ?1 ORDER BY FIELD(`u`.`position`,?1)", nativeQuery = true)
+    List<User> findByPositionIsInAndOrderByPositionInList(List<Position> positions, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
 
     int countDistinctByPosition(Position position);
 
