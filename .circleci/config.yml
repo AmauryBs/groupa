@@ -18,10 +18,9 @@ jobs:
       - run: cd ./cloud-client-eval && npm install
       - run: sudo apt-get install maven -y
       - run: mvn clean verify
-      - run: java -jar target/groupa-0.0.1-SNAPSHOT.jar
-      - run: sleep 5
+      - run: java -jar target/groupa-0.0.1-SNAPSHOT.jar&
+      - run: sleep 10
       - run: netstat -paunt
-      - run: wget -p http://localhost:8080
       - run: cd ./cloud-client-eval && npm test
 
   dependency_check:
