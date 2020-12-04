@@ -6,10 +6,17 @@ jobs:
       - image: circleci/openjdk:stretch
     steps:
       - checkout
-      - run: mvn clean install -Powasp-dependency-check
+      - run: mvn clean install -Powasp-dependency-chec
+  test_unit:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
+      - checkout
+      - run: mvn -Ptest test
 workflows:
   version: 2
 
   build-then-test:
     jobs:
       - test
+      - test_unit
