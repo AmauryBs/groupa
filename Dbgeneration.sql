@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS `Position`;
 
 CREATE TABLE `Position` (
     `positionId` int NOT NULL AUTO_INCREMENT,
-    `lat` DECIMAL(11,8),
-    `lon` DECIMAL(11,8),
+    `lat` DECIMAL(12,8),
+    `lon` DECIMAL(12,8),
 PRIMARY KEY (positionId));
  
 CREATE TABLE `User` (

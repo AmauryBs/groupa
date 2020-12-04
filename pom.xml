@@ -52,6 +52,7 @@
                 <spring.profile.from.maven>prod</spring.profile.from.maven>
             </properties>
         </profile>
+
         <profile>
             <id>owasp-dependency-check</id>
             <build>
@@ -71,8 +72,6 @@
                 </plugins>
             </build>
         </profile>
-
-
     </profiles>
 
 
@@ -124,29 +123,6 @@
         </dependency>
 
     </dependencies>
-
-
-    <profiles>
-        <profile>
-            <id>owasp-dependency-check</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.owasp</groupId>
-                        <artifactId>dependency-check-maven</artifactId>
-                        <version>${dependency-check-maven.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>

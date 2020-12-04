@@ -13,49 +13,71 @@ import polytech.cloud.groupa.utils.Constants;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This repository is used to persist and retrieve User objects
+ *
+ * @author Ewald Janin
+ *
+ * @see User
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    /**
+     * Retrieves User list of users whose birthDay is before specified date
+     *
+     * @param dateMax Date the latest birthDay possible
+     * @param pageable optional pagination
+     *
+     * @return List of User objects matching requirements
+     *
+     * @see User
+     * @see Pageable
+     */
     List<User> findByBirthDayBefore(Date dateMax, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
 
+    /**
+     * Retrieves User list of users whose birthDay is between specified dates
+     *
+     * @param dateMin Date the first birthDay possible
+     * @param dateMax Date the latest birthDay possible
+     * @param pageable optional pagination
+     *
+     * @return List of User objects matching requirements
+     *
+     * @see User
+     * @see Pageable
+     */
     List<User> findByBirthDayBetween(Date dateMin, Date dateMax, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
 
+    /**
+     * Retrieves User list of users whose lastName contains specified name
+     *
+     * @param name String which lastName must match
+     * @param pageable optional pagination
+     *
+     * @return List of User objects matching requirements
+     *
+     * @see User
+     * @see Pageable
+     */
     List<User> findByLastNameContains(String name, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
 
+    /**
+     * Retrieves User list of users whose Position is in the list
+     *
+     * @param positions List of Position that User must match
+     * @param pageable optional pagination
+     *
+     * @return List of User objects matching requirements
+     *
+     * @see User
+     * @see Position
+     * @see Pageable
+     */
     @Query(value = "SELECT u.id, u.firstName, u.lastName, u.birthDay, u.position " +
             "FROM User u " +
             "WHERE u.position IN ?1 ORDER BY FIELD(`u`.`position`,?1)", nativeQuery = true)
     List<User> findByPositionIsInAndOrderByPositionInList(List<Position> positions, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
 
-    int countDistinctByPosition(Position position);
-
-    /*
-    @Query("SELECT u FROM User u WHERE u.birthDay<?1")
-    List<User> findWithAgeSup(Date date, @PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
-    */
-
-    /*
-    @Query("SELECT u FROM User u WHERE u.birthDay >=?1 AND u.birthDay <=?2")
-    List<User> findWithAgeEq(Date date, Date dateMax, @PageableDefault(size = 100) Pageable pageable);
-    */
-
-    /*
-    @Query("SELECT u FROM User u WHERE u.lastName = ?1")
-    List<User> findWithName(String name, @PageableDefault(size = 100) Pageable pageable);
-    */
-
-    /*
-    @Query("SELECT u FROM User u")
-    List<User> findNUser(@PageableDefault(size = Constants.USER_PAGE_SIZE) Pageable pageable);
-    */
-
-    /*
-    @Query("DELETE FROM User u WHERE u.id = ?1")
-    void deleteWithId(long id);
-    */
-
-    /*
-    @Query("SELECT u1 FROM User u1, User u, WHERE u1.latitude - ?1 <")
-    public List<User> findByLatAndLon(int lat,int lon, Pageable pageable);
-    */
 }
