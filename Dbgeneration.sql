@@ -1,16 +1,19 @@
-USE `bltnqtwwulzbsp3yfedg`;
+CREATE DATABASE IF NOT EXISTS `bltnqtwwulzbsp3yfedg` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
- CREATE TABLE Position (
-    `PositionID` int NOT NULL AUTO_INCREMENT,
-    `lat` FLOAT,
-    `lon` FLOAT,
- PRIMARY KEY (PositionID));
+DROP TABLE IF EXISTS `User`;
+DROP TABLE IF EXISTS `Position`;
+
+CREATE TABLE `Position` (
+    `positionId` int NOT NULL AUTO_INCREMENT,
+    `lat` DECIMAL(11,8),
+    `lon` DECIMAL(11,8),
+PRIMARY KEY (positionId));
  
-CREATE TABLE Users (
+CREATE TABLE `User` (
 	`id` int NOT NULL AUTO_INCREMENT,
     `firstName` VARCHAR(255),
     `lastName` VARCHAR(255),
     `birthDay` DATE,
-    `PositionID` int,
+    `position` int,
     PRIMARY KEY (id),
-    FOREIGN KEY (PositionID) REFERENCES Position (PositionID));
+    FOREIGN KEY (position) REFERENCES `Position` (positionId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
