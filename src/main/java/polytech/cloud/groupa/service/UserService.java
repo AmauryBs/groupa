@@ -111,8 +111,8 @@ public class UserService {
      * @see PositionRepository
      */
     public void deleteAllUser(){
-        this.userRepo.deleteAll();
-        this.positionRepo.deleteAll();
+        this.userRepo.deleteAllInBatch();
+        this.positionRepo.deleteAllInBatch();
     }
 
     /**
